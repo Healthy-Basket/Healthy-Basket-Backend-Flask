@@ -27,8 +27,22 @@ def authorize():
 
 @auth.route('/callback')
 def callback():
-    token = oauth.fetch_token(
-    token_url,
-    authorization_response=request.url,
-    auth=HTTPBasicAuth(client_id, client_secret)
-)
+    try:
+        oauth_state = session.get('oauth_state')
+        oauth = OAuth2Session(client_id, redirect_uri=redirect_uri, state=oauth_state)
+        print(f"Request URL: {request.url}")  # Log the request URL
+        
+        # Fetch the token
+        token = oauth.fetch_token(
+            token_url,
+            authorization_response=request.url,
+            auth=HTTPBasicAuth(client_id, client_secret)
+        )
+        session['token'] = token        
+        # Save token and return a success message
+        return jsonify({"message": "Authentication successful", "token": token})
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": str(e)}), 400
+
