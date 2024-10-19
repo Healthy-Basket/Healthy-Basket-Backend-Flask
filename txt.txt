@@ -1,11 +1,2 @@
-https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=23PW6R&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&code_challenge=E9Melhoa2OwvFrEMTJgCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256&scope=activity%20nutrition%20heartrate%20location
-
-auth request url = https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=23PW6R&redirect_uri=http%3A%2F%2Flocalhost&scope=activity%20nutrition%20heartrate%20location
-code = 7f356430596d36b024569fe4d86907ce2d2cbdd7
-
-POST https://api.fitbit.com/oauth2/token
-Authorization: Basic MjNQVzZSOjE1ZGFhZDRkYTE3NjQ4YmRiMjYxMmZkMTY3NDIxYjI1
-Content-Type: application/x-www-form-urlencoded
-
-grant_type=client_credentials
+https://www.fitbit.com/oauth2/authorize
 
