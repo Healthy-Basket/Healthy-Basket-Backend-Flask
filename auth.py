@@ -1,13 +1,14 @@
 from flask import Blueprint, request
 from flask import Blueprint, redirect, url_for, request, session, jsonify
 from requests_oauthlib import OAuth2Session
+from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 import os
 
 auth = Blueprint('auth', __name__)
 load_dotenv()
 client_id  = os.getenv("CLIENT_ID")
-client_SECRET  = os.getenv("CLIENT_SECRET")
+client_secret  = os.getenv("CLIENT_SECRET")
 redirect_uri = os.getenv("REDIRECT_URI")
 authorization_uri = os.getenv("FITBIT_AUTHORIZATION_URI")
 token_url = os.getenv("TOKEN_REQUEST_URI")
@@ -26,6 +27,8 @@ def authorize():
 
 @auth.route('/callback')
 def callback():
-    token = oauth.fetch_token(token_url, authorization_response=request.url)
-    session['fitbit_token'] = token
-    return redirect(url_for('home'))  # Redirect to your home page
+    token = oauth.fetch_token(
+    token_url,
+    authorization_response=request.url,
+    auth=HTTPBasicAuth(client_id, client_secret)
+)
