@@ -26,7 +26,7 @@ def save_user():
 
     # Insert the user into the MongoDB collection
     try:
-        mongo.HealthyBasket.users.insert_one(user)  # Assuming you have a 'users' collection
+        mongo.cx["HealthyBasket"].users.insert_one(user)  # Assuming you have a 'users' collection
         return jsonify({"msg": "User saved successfully"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -34,6 +34,6 @@ def save_user():
 
 @home.route('/list_collections')
 def list_collections():
-    collections = mongo.HealthyBasket.list_collection_names()
+    collections = mongo.db.list_collection_names()
     return {'collections': collections}
     
