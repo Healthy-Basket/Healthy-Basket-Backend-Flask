@@ -24,7 +24,9 @@ def create_app():
 
     with app.app_context():
         #mongo = PyMongo(app)
+        #print("MONGO_URI:", app.config.get("MONGO_URI"))
         mongo.init_app(app)
+        print("Mongo initialized:", mongo.db)
         app.register_blueprint(home)
         app.register_blueprint(auth)
         app.register_blueprint(fitbit)
