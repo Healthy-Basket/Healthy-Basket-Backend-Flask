@@ -97,7 +97,7 @@ def profile():
             upsert=True
         )
         
-        return jsonify({"message": "Profile data saved successfully", "profile": user_profile}), 200
+        return jsonify({"message": "Profile data saved successfully"}), 200
 
     except requests.exceptions.HTTPError as http_err:
         # Handle HTTP errors (like 401 for unauthorized)
