@@ -75,6 +75,8 @@ def profile():
         gender = profile_data.get('gender')
         age = profile_data.get('age')  # Fitbit might not directly provide age; you might need to calculate it using the birthdate.
         weight = profile_data.get('weight')  # Weight might be in a different API endpoint, so adjust if needed.
+        height = profile_data.get('height')
+        sleepTracking = profile_data.get('sleepTracking')
 
         # Construct the document to insert into MongoDB
         user_profile = {
@@ -82,6 +84,8 @@ def profile():
             "gender": gender,
             "age": age,
             "weight": weight,
+            "height": height,
+            "sleepTracking": sleepTracking,
             "fitbit_id": profile_data.get('encodedId')  # Store the Fitbit user ID for reference
         }
         
