@@ -19,6 +19,12 @@ token_url = os.getenv("TOKEN_REQUEST_URI")
 scopes = ['activity', 'sleep', 'weight','profile', 'nutrition', 'heartrate', 'location']
 oauth = OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scopes)
 
+# Home route
+@auth.route('/')
+def home():
+    return "<h1>Welcome to the Healthy Basket API</h1><a href='/authorize'>Authenticate with Fitbit</a>"
+
+
 @auth.route('/authorize')
 def authorize():
     url = 'https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=23PW6R&redirect_uri=http%3A%2F%2Flocalhost&scope=activity%20nutrition%20heartrate%20location'
@@ -93,7 +99,7 @@ def profile():
         # Assuming you use `fitbit_id` as a unique identifier for the user
         mongo.db.user_profiles.update_one(
             {"fitbit_id": profile_data.get('encodedId')},
-            {"$set": user_profile},
+            {"$set": profile_data},
             upsert=True
         )
         
