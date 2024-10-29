@@ -20,7 +20,7 @@ def create_app():
     from home import home
     from auth import auth
     from onboarding import onboarding
-    from fitbit import fitbit
+    from googlefit import googlefit
 
     with app.app_context():
         #mongo = PyMongo(app)
@@ -29,7 +29,7 @@ def create_app():
         print("Mongo initialized:", mongo.db)
         app.register_blueprint(home)
         app.register_blueprint(auth)
-        app.register_blueprint(fitbit)
+        app.register_blueprint(googlefit)
         app.register_blueprint(onboarding)
         
     return app
