@@ -21,7 +21,6 @@ def create_app():
     from auth import auth
     from onboarding import onboarding
     from googlefit import googlefit
-
     with app.app_context():
         #mongo = PyMongo(app)
         #print("MONGO_URI:", app.config.get("MONGO_URI"))
