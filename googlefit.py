@@ -34,6 +34,22 @@ def credentials_to_dict(credentials):
         'scopes': credentials.scopes
     }
 
+# Home route
+@googlefit.route('/googlefit')
+def home():
+    return "<h1>Welcome to the Healthy Basket API</h1><a href='/auth'>Authenticate with Google Fit</a>"
+
+@googlefit.route('/auth')
+def auth():
+    flow = Flow.from_client_secrets_file(
+        'client_secret.json', scopes=SCOPES,
+        redirect_uri=REDIRECT_URI
+    )
+    print(f"Redirect URI being used: {REDIRECT_URI}")
+    authorization_url, state = flow.authorization_url(access_type='offline')
+    session['state'] = state
+    return redirect(authorization_url)
+
 # OAuth2 callback
 @googlefit.route('/oauth2callback')
 def oauth2callback():
