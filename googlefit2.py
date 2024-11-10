@@ -64,6 +64,7 @@ def oauth2callback():
     session['credentials'] = credentials_to_dict(credentials)
     
     # Debugging: Print credentials
+    print(credentials)
     print(session['credentials'])
     
     return redirect('/user_health_summary')
