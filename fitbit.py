@@ -20,7 +20,7 @@ scopes = ['activity', 'sleep', 'weight','profile', 'nutrition', 'heartrate', 'lo
 oauth = OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scopes)
 
 # Home route
-@fitbit.route('/')
+@fitbit.route('/fitbit')
 def home():
     return "<h1>Welcome to the Healthy Basket API</h1><a href='/authorize'>Authenticate with Fitbit</a>"
 

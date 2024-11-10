@@ -6,6 +6,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
+from app import mongo
 
 load_dotenv()
 
@@ -133,7 +134,20 @@ def user_health_summary():
                           if weight_data.get('bucket') and weight_data['bucket'][0]['dataset'][0]['point'] else "Not available"
             }
         }
-    
+
+        # Upsert into MongoDB using a unique identifier for each user
+        # `user_id` here is a custom identifier you assign to each user upon authentication
+        user_id = session.get('user_id')  # Fetching user_id from session data
+
+        if user_id:
+            mongo.db.user_profiles.update_one(
+                {"user_id": user_id},  # Use your unique identifier
+                {"$set": refined_data},
+                upsert=True
+            )
+        else:
+            return jsonify({"error": "User ID not found in session"}), 400
+          
         return jsonify(refined_data)
     
     except Exception as e:
