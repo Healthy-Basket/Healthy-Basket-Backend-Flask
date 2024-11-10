@@ -94,7 +94,8 @@ def user_health_summary():
     # Initialize credentials and set up time range (last 7 days)
     credentials = Credentials(**session['credentials'])
     end_time = datetime.now()
-    start_time = end_time - timedelta(days=7)
+    start_time = end_time.replace(hour=0, minute=0, second=0, microsecond=0)  # Start of the day
+
     
     # Retrieve and process required data
     try:
