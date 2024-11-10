@@ -72,7 +72,7 @@ def oauth2callback():
     people_api_url = "https://people.googleapis.com/v1/people/me"
     # Specify the fields to retrieve (resourceName is required to get user ID)
     params = {
-        'personFields': 'resourceName,names'  # Include the necessary fields
+        'personFields': 'names'  # Include the necessary fields
     }
     response = requests.get(people_api_url, headers={"Authorization": f"Bearer {credentials.token}"},params=params)
     
