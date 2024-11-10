@@ -19,7 +19,12 @@ CLIENT_ID = os.getenv('CLIENT_ID1')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET1')
 REDIRECT_URI = os.getenv('REDIRECT_URI1')
 
-SCOPES = ['https://www.googleapis.com/auth/fitness.activity.read']
+
+SCOPES = ['https://www.googleapis.com/auth/fitness.activity.read', 
+          'https://www.googleapis.com/auth/fitness.sleep.read', 
+          'https://www.googleapis.com/auth/fitness.body.read', 
+          'https://www.googleapis.com/auth/userinfo.profile']  # Add this line
+
 API_SERVICE_NAME = 'fitness'
 API_VERSION = 'v1'
 
