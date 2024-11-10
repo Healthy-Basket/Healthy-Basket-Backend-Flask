@@ -20,7 +20,7 @@ def create_app():
     from home import home
     from auth import auth
     from onboarding import onboarding
-    from googlefit import googlefit
+    from googlefit1 import googlefit
     with app.app_context():
         #mongo = PyMongo(app)
         #print("MONGO_URI:", app.config.get("MONGO_URI"))
