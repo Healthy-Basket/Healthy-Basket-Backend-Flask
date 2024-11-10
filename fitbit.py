@@ -7,7 +7,7 @@ import os
 import requests
 from app import mongo
 
-fitbit = Blueprint('fitbit', __name__,url_prefix="/api/v1/fitbit")
+fitbit = Blueprint('fitbit', __name__)
 load_dotenv()
 client_id  = os.getenv("CLIENT_ID")
 client_secret  = os.getenv("CLIENT_SECRET")

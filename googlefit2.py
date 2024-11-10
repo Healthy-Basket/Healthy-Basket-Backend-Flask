@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-googlefit = Blueprint('googlefit', __name__,url_prefix="/api/v1/googlefit")
+googlefit = Blueprint('googlefit', __name__)
 
 
 # OAuth 2.0 credentials
