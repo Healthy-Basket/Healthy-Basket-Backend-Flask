@@ -70,7 +70,11 @@ def oauth2callback():
 
     # Fetch the user's Google Account ID using the Google People API
     people_api_url = "https://people.googleapis.com/v1/people/me"
-    response = requests.get(people_api_url, headers={"Authorization": f"Bearer {credentials.token}"})
+    # Specify the fields to retrieve (resourceName is required to get user ID)
+    params = {
+        'personFields': 'resourceName,names'  # Include the necessary fields
+    }
+    response = requests.get(people_api_url, headers={"Authorization": f"Bearer {credentials.token}"},params=params)
     
     # If the response is successful, store the user ID in the session
     if response.status_code == 200:
