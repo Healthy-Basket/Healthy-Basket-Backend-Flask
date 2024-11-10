@@ -62,10 +62,32 @@ def oauth2callback():
 
     credentials = flow.credentials
     session['credentials'] = credentials_to_dict(credentials)
+
+    # Fetch the user's Google Account ID using the Google People API
+    people_api_url = "https://people.googleapis.com/v1/people/me"
+    response = requests.get(people_api_url, headers={"Authorization": f"Bearer {credentials.token}"})
+    
+    # If the response is successful, store the user ID in the session
+    if response.status_code == 200:
+        user_data = response.json()
+        google_account_id = user_data.get('resourceName', None)
+        
+        # Store the Google Account ID in the session if found
+        if google_account_id:
+            session['google_account_id'] = google_account_id
+            print(f"User Google Account ID: {google_account_id}")
+        else:
+            print("Error: Google Account ID not found.")
+    
+    else:
+        print(f"Error fetching user info: {response.status_code} - {response.text}")
+
     
     # Debugging: Print credentials
     print(credentials)
     print(session['credentials'])
+    for i in session:
+        print(i)
     
     return redirect('/user_health_summary')
 
@@ -138,7 +160,7 @@ def user_health_summary():
 
         # Upsert into MongoDB using a unique identifier for each user
         # `user_id` here is a custom identifier you assign to each user upon authentication
-        user_id = session.get('user_id')  # Fetching user_id from session data
+        user_id = session.get('google_account_id')  # Fetching user_id from session data
 
         if user_id:
             mongo.db.user_profiles.update_one(
