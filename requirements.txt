@@ -21,3 +21,7 @@ gunicorn==23.0.0
 google-auth==2.16.0
 google-auth-oauthlib==0.4.6
 google-api-python-client==2.70.0
+PyJWT==2.9.0
+bcrypt==4.2.0 
+flask-bcrypt==1.0.1 
+flask-jwt-extended==4.6.0
