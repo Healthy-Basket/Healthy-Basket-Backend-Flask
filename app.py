@@ -18,6 +18,7 @@ def create_app():
     CORS(app, supports_credentials=True)
     
     from home import home
+    from auth import auth
     from fitbit import fitbit
     from onboarding import onboarding
     from googlefit2 import googlefit
@@ -27,6 +28,7 @@ def create_app():
         mongo.init_app(app)
         print("Mongo initialized:", mongo.db)
         app.register_blueprint(home)
+        app.register_blueprint(auth)
         app.register_blueprint(fitbit)
         app.register_blueprint(googlefit)
         app.register_blueprint(onboarding)
