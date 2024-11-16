@@ -54,7 +54,7 @@ def login():
 @auth.route('/google_signup')
 def google_signup():
     flow = Flow.from_client_secrets_file(
-        'authclient_secret.json',
+        'client_secret.json',
         scopes=SCOPES,
         redirect_uri=GOOGLE_REDIRECT_URI
     )
