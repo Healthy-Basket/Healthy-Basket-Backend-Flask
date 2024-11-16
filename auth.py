@@ -11,7 +11,7 @@ auth = Blueprint('auth', __name__)
 GOOGLE_CLIENT_ID = os.getenv("client_id")
 GOOGLE_CLIENT_SECRET = os.getenv("client_secret")
 GOOGLE_REDIRECT_URI = os.getenv("redirect_uri")
-SCOPES = ["openid", "email", "profile"]
+SCOPES = ["openid","https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"]
 
 # Helper function to generate a MongoDB-safe user dictionary
 def create_user(email, password_hash=None, google_id=None):
