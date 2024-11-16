@@ -67,7 +67,7 @@ def google_signup():
 def google_callback():
     state = session['state']
     flow = Flow.from_client_secrets_file(
-        'client_secret.json', scopes=SCOPES, state=state,
+        'authclient_secret.json', scopes=SCOPES, state=state,
         redirect_uri=GOOGLE_REDIRECT_URI
     )
     flow.fetch_token(authorization_response=request.url)
