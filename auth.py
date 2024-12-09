@@ -43,12 +43,26 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
+    # return specific error messages 
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
     user = mongo.db.users.find_one({"email": email})
     if not user or not check_password_hash(user['password_hash'], password):
         return jsonify({"error": "Invalid email or password"}), 401
 
     session['user_id'] = str(user['_id'])  # Store user ID in session
-    return jsonify({"message": "Logged in successfully"}), 200
+
+    # create a user object here so that i can grab the uid and use it to fetch the user's data
+    user_object = {
+        "id": str(user['_id']),
+        "email": user['email'],
+        "name": user.get('name'),
+    }
+    return jsonify( {
+        "message": "Logged in successfully",
+        "user": user_object
+    }), 200
 
 # Initiate Google Sign-In
 @auth.route('/google_signup')
