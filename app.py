@@ -3,13 +3,15 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 #from extensions import mongo
 from flask_pymongo import PyMongo
+from flask_jwt_extended import JWTManager
 
 
 from config import config_by_name
 
 load_dotenv()
 
-mongo = PyMongo() 
+mongo = PyMongo()
+jwt = JWTManager() 
 
 def create_app():
     """creates main app"""
@@ -26,7 +28,8 @@ def create_app():
         #mongo = PyMongo(app)
         #print("MONGO_URI:", app.config.get("MONGO_URI"))
         mongo.init_app(app)
-        print("Mongo initialized:", mongo.db)
+        jwt.init_app(app)
+        #print("Mongo initialized:", mongo.db)
         app.register_blueprint(home)
         app.register_blueprint(auth)
         app.register_blueprint(fitbit)

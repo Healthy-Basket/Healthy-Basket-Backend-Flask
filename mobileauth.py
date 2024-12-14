@@ -70,4 +70,7 @@ def google_callback():
 
     # Return token for mobile app
     session.pop('state', None)
-    return jsonify({"access_token": credentials.token, "user_id": str(user['_id'])}), 200
+    return jsonify({
+        "access_token": credentials.token,
+        "user_id": str(user['_id'])
+        }), 200
