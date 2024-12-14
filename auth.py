@@ -152,7 +152,7 @@ def google_callback():
     return jsonify({
         "message": "Google sign-up successful",
         "access_token": access_token,
-        "user": user_object
+        "user": user_info
     }), 200
 
 # Logout endpoint
