@@ -142,10 +142,17 @@ def google_callback():
         mongo.db.users.insert_one(user)
 
     access_token = create_access_token(identity=str(user['_id']))
+    # create a user object here so that i can grab the uid and use it to fetch the user's data
+    user_object = {
+        "id": str(user['_id']),
+        "email": user['email'],
+        "name": "{} {}".format(firstname,lastname)
+    }
 
     return jsonify({
         "message": "Google sign-up successful",
-        "access_token": access_token
+        "access_token": access_token,
+        "user": user_object
     }), 200
 
 # Logout endpoint
