@@ -100,7 +100,7 @@ def login():
         "user": user_object
     }), 200
 
-# Initiate Google Sign-In
+# Initiate Google Sign-In over the web
 @auth.route('/google_signup')
 def google_signup():
     flow = Flow.from_client_secrets_file(
@@ -158,6 +158,43 @@ def google_callback():
         "access_token": access_token,
         "user": user_object
     }), 200
+
+@auth.route('/mobile_google_signup', methods=['POST'])
+def mobile_google_signup():
+    data = request.get_json()
+    id_token = data.get('id_token')
+
+    try:
+        id_info = id_token.verify_oauth2_token(id_token, requests.Request(), GOOGLE_CLIENT_ID)
+
+        if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            raise ValueError('Wrong issuer.')
+
+        email = id_info['email']
+        google_id = id_info['sub']
+        firstname = id_info.get('given_name', '')
+        lastname = id_info.get('family_name', '')
+
+        user = mongo.db.users.find_one({"google_id": google_id})
+        if not user:
+            user = create_user(email, firstname, lastname, google_id=google_id)
+            mongo.db.users.insert_one(user)
+
+        access_token = create_access_token(identity=str(user['_id']))
+        user_object = {
+            "id": str(user['_id']),
+            "email": user['email'],
+            "name": "{} {}".format(firstname, lastname)
+        }
+
+        return jsonify({
+            "message": "Google sign-up successful",
+            "access_token": access_token,
+            "user": user_object
+        }), 200
+
+    except ValueError:
+        return jsonify({"error": "Invalid ID token"}), 400
 
 # Logout endpoint
 @auth.route('/logout')
