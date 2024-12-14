@@ -12,7 +12,11 @@ auth = Blueprint('auth', __name__)
 GOOGLE_CLIENT_ID = os.getenv("client_id")
 GOOGLE_CLIENT_SECRET = os.getenv("client_secret")
 GOOGLE_REDIRECT_URI = os.getenv("redirect_uri")
-SCOPES = ["openid","https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"]
+SCOPES = [
+    "openid",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email"
+    ]
 
 # Helper function to generate a MongoDB-safe user dictionary
 def create_user(email,firstname,lastname, password_hash=None, google_id=None):
@@ -120,7 +124,7 @@ def google_callback():
     credentials = flow.credentials
 
     user_info_response = requests.get(
-        "https://people.googleapis.com/v1/people/me?personFields=emailAddresses",
+        "https://people.googleapis.com/v1/people/me?personFields=emailAddresses,names",
         headers={"Authorization": f"Bearer {credentials.token}"}
     )
     user_info = user_info_response.json()
@@ -152,7 +156,7 @@ def google_callback():
     return jsonify({
         "message": "Google sign-up successful",
         "access_token": access_token,
-        "user": user_info
+        "user": user_object
     }), 200
 
 # Logout endpoint
