@@ -165,10 +165,10 @@ def google_callback():
 @auth.route('/mobile_google_signup', methods=['POST'])
 def mobile_google_signup():
     data = request.get_json()
-    id_token = data.get('id_token')
+    id_token_str = data.get('id_token')
 
     try:
-        id_info = id_token.verify_oauth2_token(id_token, requests.Request(), IOS_GOOGLE_CLIENT_ID)
+        id_info = id_token.verify_oauth2_token(id_token_str, requests.Request(), IOS_GOOGLE_CLIENT_ID)
 
         if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise ValueError('Wrong issuer.')
