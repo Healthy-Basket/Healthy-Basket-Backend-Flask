@@ -9,6 +9,7 @@ import requests
 auth = Blueprint('auth', __name__)
 
 # Google OAuth configuration
+IOS_GOOGLE_CLIENT_ID = os.getenv("IOS_GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_ID = os.getenv("client_id")
 GOOGLE_CLIENT_SECRET = os.getenv("client_secret")
 GOOGLE_REDIRECT_URI = os.getenv("redirect_uri")
@@ -165,7 +166,7 @@ def mobile_google_signup():
     id_token = data.get('id_token')
 
     try:
-        id_info = id_token.verify_oauth2_token(id_token, requests.Request(), GOOGLE_CLIENT_ID)
+        id_info = id_token.verify_oauth2_token(id_token, requests.Request(), IOS_GOOGLE_CLIENT_ID)
 
         if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise ValueError('Wrong issuer.')
