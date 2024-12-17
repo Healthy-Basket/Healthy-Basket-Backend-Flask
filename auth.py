@@ -168,8 +168,15 @@ def mobile_google_signup():
     id_token_str = data.get('id_token')
 
     try:
-        id_info = id_token.verify_oauth2_token(id_token_str, requests.Request(), IOS_GOOGLE_CLIENT_ID)
-
+        # Create a requests.Session object
+        session = requests.Session()
+        # Create a requests.Request object
+        req = requests.Request(method="GET")
+        # Prepare the request
+        prepped = session.prepare_request(req)
+        # Verify the ID token
+        id_info = id_token.verify_oauth2_token(id_token_str, prepped, IOS_GOOGLE_CLIENT_ID)
+        
         if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise ValueError('Wrong issuer.')
 
