@@ -32,7 +32,7 @@ def create_user(email,firstname,lastname, password_hash=None, google_id=None):
     }
 
 # Signup with email and password
-@auth.route('/signup', methods=['POST'])
+@auth.route('',/signup methods=['POST'])
 def signup():
     #payload data
     data = request.get_json()
@@ -150,6 +150,7 @@ def google_callback():
 
     access_token = create_access_token(identity=str(user['_id']))
     # create a user object here so that i can grab the uid and use it to fetch the user's data
+
     user_object = {
         "id": str(user['_id']),
         "email": user['email'],
@@ -196,7 +197,7 @@ def mobile_google_signup():
             "email": user['email'],
             "name": "{} {}".format(firstname, lastname)
         }
-
+        
         return jsonify({
             "message": "Google sign-up successful",
             "access_token": access_token,

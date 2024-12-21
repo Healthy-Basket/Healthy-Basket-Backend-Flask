@@ -207,6 +207,51 @@ The application will start on `http://127.0.0.1:5000/`.
          "error": "Authentication failed"
        }
        ```
+10. # `/mobile_google_signup` Endpoint Documentation
+
+## Overview
+
+The `/mobile_google_signup` endpoint handles Google Sign-Up for mobile users. It verifies the Google ID token provided by the client, checks if the user exists in the database, and either retrieves or creates a user record. The endpoint then generates an access token for the authenticated user.
+
+## URL
+
+`/mobile_google_signup`
+
+## HTTP Method
+
+`POST`
+
+## Request Headers
+
+- **Content-Type**: `application/json`
+
+## Request Body
+
+The request body should contain the following field:
+
+| Field Name | Type   | Description                                       |
+|------------|--------|---------------------------------------------------|
+| `id_token` | string | The Google ID token obtained from the client app. |
+
+### Example Request Body
+
+```json
+{
+  "id_token": "YOUR_GOOGLE_ID_TOKEN_HERE"
+}
+```
+## Response
+```json
+{
+  "message": "Google sign-up successful",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "5f8f8c44b54764421b7156ff",
+    "email": "example@gmail.com",
+    "name": "John Doe"
+  }
+}
+```
 
 ## Expected Outputs
 - The `/api/v1/saveuser` endpoint will return a success message upon saving a user.
