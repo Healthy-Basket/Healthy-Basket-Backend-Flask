@@ -11,6 +11,7 @@
 * Go to the "Network Access" section to whitelist your IP address.
 * In the "Clusters" section, click "Connect" and choose "Connect your application".
 * Copy the connection string and replace the placeholder values with your database user credentials.
+
 **Environment Variable:**
 ```
 MONGO_URI=mongodb+srv://username:password@cluster-name.mongodb.net/database-name
@@ -19,6 +20,7 @@ MONGO_URI=mongodb+srv://username:password@cluster-name.mongodb.net/database-name
 1. Generate a JWT Secret Key:
 
 * Use a secure method to generate a secret key. You can use online tools or libraries to generate a strong secret key.
+
 **Environment Variable:**
 ```
 JWT_SECRET_KEY=your_secret_key_here
@@ -27,11 +29,12 @@ JWT_SECRET_KEY=your_secret_key_here
 ## Fitbit API
 1. Navigate to Fitbit Developer:
 
-* Go to Fitbit Developer.
+* Go to [Fitbit Developer](https://dev.fitbit.com/apps).
 * Sign in or create an account.
 * Create a new application.
 * Note down the **CLIENT_ID** and **CLIENT_SECRET**.
-* Set the REDIRECT_URI to your application's callback URL.
+* Set the **REDIRECT_URI** to your application's callback URL.
+
 **Environment Variables:**
 ```
 CLIENT_ID="xxxxxx"
@@ -49,8 +52,9 @@ REDIRECT_URI="https://example.com/callback"
 * Create a new project or select an existing one.
 * Enable the "Fitness API".
 * Go to "Credentials" and create OAuth 2.0 Client IDs for Web Application.
-* Note down the CLIENT_ID1 and CLIENT_SECRET1.
-* Set the REDIRECT_URI1 to your application's callback URL.
+* Note down the **CLIENT_ID1** and **CLIENT_SECRET1**.
+* Set the **REDIRECT_URI1** to your application's callback URL.
+
 **Environment Variables:**
 ```
 CLIENT_ID1  = "xxxxxxxxxxxx.apps.googleusercontent.com"
@@ -58,11 +62,12 @@ CLIENT_SECRET1 = "xxxxxxxxxxxxxxxxxxxx"
 REDIRECT_URI1 = "https://example.com/oauth2callback"
 ```
 ## Google OAuth
-1. Navigate to Google Cloud Console:
+1. Navigate to [Google Cloud Console](https://console.cloud.google.com/).
 
 * Follow the same steps as for Google Fit API to create OAuth 2.0 Client IDs for Web Application.
-* Note down the client_id and client_secret.
-* Set the redirect_uri to your application's callback URL.
+* Note down the **client_id** and **client_secret**.
+* Set the **redirect_uri** to your application's callback URL.
+
 **Environment Variables**:
 ```
 client_id = "xxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com"
@@ -75,9 +80,10 @@ redirect_uri = "https://example.com/google_callback"
 * Go to [Apple Developer](https://developer.apple.com/).
 * Sign in or create an account.
 * Create a new App ID and configure it for your application.
-* Note down the IOS_BUNDLE_ID.
-* Create OAuth 2.0 Client IDs for iOS Application in Google Cloud Console.
-* Note down the IOS_GOOGLE_CLIENT_ID.
+* Note down the **IOS_BUNDLE_ID**.
+* Create OAuth 2.0 **Client IDs** for iOS Application in [Google Cloud Console](https://console.cloud.google.com/).
+* Note down the **IOS_GOOGLE_CLIENT_ID**.
+
 **Environment Variables**:
 ```
 IOS_BUNDLE_ID = "com.healthybasket.Healthy-basket"
@@ -85,4 +91,4 @@ IOS_GOOGLE_CLIENT_ID = "xxxxxxxxxxxxxxxx.apps.googleusercontent.com"
 ```
 **Ensure all these environment variables are set in your .env file before deploying the application.**
 
-*happy deployment*
+[*happy deployment*](https://github.com/bernardev254)
