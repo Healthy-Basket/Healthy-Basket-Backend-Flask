@@ -214,7 +214,7 @@ def mobile_google_signup():
     except ValueError:
         return jsonify({"error": "Invalid ID token"}), 400
 
-@app.route("/test_db")
+@auth.route("/test_db")
 def test_db():
     try:
         mongo.db.command("ping") 
