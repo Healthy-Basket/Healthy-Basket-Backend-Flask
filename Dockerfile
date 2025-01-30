@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN useradd -m appuser
 
-USER appuser
+USER root
 
 COPY requirements.txt .
 
@@ -18,8 +18,14 @@ RUN python -m venv /app/venv \
     && . /app/venv/bin/activate \
     && pip install --no-cache-dir -r requirements.txt
 
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
 COPY . .
 
 EXPOSE 5000
+
+ENV PATH="/app/venv/bin:$PATH"
 
 CMD ["venv/bin/gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
