@@ -20,8 +20,16 @@ def create_app():
     app.config.from_object(config_by_name["prod"])
     app.config['MONGO_URI'] = os.getenv("MONGO_URI")
     app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
+
+    print("🔍 MONGO_URI:", app.config['MONGO_URI']) 
+
+    if not app.config['MONGO_URI']:
+        raise ValueError("❌ MONGO_URI is not set! Check your environment variables.")
+
+
     CORS(app, supports_credentials=True)
-    
+
+
     from home import home
     from auth import auth
     from fitbit import fitbit
@@ -29,10 +37,10 @@ def create_app():
     from googlefit2 import googlefit
     with app.app_context():
         #mongo = PyMongo(app)
-        #print("MONGO_URI:", app.config.get("MONGO_URI"))
+        print("MONGO_URI:", app.config.get("MONGO_URI"))
         mongo.init_app(app)
         jwt.init_app(app)
-        #print("Mongo initialized:", mongo.db)
+        print("Mongo initialized:", mongo.db)
         app.register_blueprint(home, url_prefix='/api/v1')
         app.register_blueprint(auth, url_prefix='/api/v1/auth')
         app.register_blueprint(fitbit)
