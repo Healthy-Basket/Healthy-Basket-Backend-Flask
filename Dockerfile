@@ -12,8 +12,10 @@ USER appuser
 
 COPY requirements.txt .
 
-RUN python -m venv venv \
-    && . venv/bin/activate \
+RUN mkdir -p /app/venv && chmod -R 777 /app/venv
+
+RUN python -m venv /app/venv \
+    && . /app/venv/bin/activate \
     && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
