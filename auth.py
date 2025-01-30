@@ -34,6 +34,9 @@ def create_user(email,firstname,lastname, password_hash=None, google_id=None):
 # Signup with email and password
 @auth.route('/signup', methods=['POST'])
 def signup():
+    if not mongo.db:
+        return jsonify({"error": "Database connection failed"}), 500
+
     #payload data
     data = request.get_json()
     email = data.get('email')
@@ -58,7 +61,11 @@ def signup():
 
     password_hash = generate_password_hash(password)
     user = create_user(email,firstname,lastname, password_hash=password_hash)
-    mongo.db.users.insert_one(user)
+
+    try:
+        mongo.db.users.insert_one(user)
+    except Exception as e:
+        return jsonify({"error": f"Database error: {str(e)}"}), 500
     
     # create a user object here so that i can grab the uid and use it to fetch the user's data
     user_object = {
@@ -207,6 +214,14 @@ def mobile_google_signup():
     except ValueError:
         return jsonify({"error": "Invalid ID token"}), 400
 
+@app.route("/test_db")
+def test_db():
+    try:
+        mongo.db.command("ping") 
+        return jsonify({"status": "Connected to MongoDB"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 # Logout endpoint
 @auth.route('/logout')
 def logout():

@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
+import os
 #from extensions import mongo
 from flask_pymongo import PyMongo
 from flask_jwt_extended import JWTManager
@@ -17,6 +18,8 @@ def create_app():
     """creates main app"""
     app = Flask(__name__,instance_relative_config=True)
     app.config.from_object(config_by_name["prod"])
+    app.config['MONGO_URI'] = os.getenv("MONGO_URI")
+    app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
     CORS(app, supports_credentials=True)
     
     from home import home
