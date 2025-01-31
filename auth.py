@@ -34,7 +34,7 @@ def create_user(email,firstname,lastname, password_hash=None, google_id=None):
 # Signup with email and password
 @auth.route('/signup', methods=['POST'])
 def signup():
-    if not mongo.db:
+    if not mongo.db is None:
         return jsonify({"error": "Database connection failed"}), 500
 
     
