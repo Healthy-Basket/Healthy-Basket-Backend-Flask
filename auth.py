@@ -37,47 +37,60 @@ def signup():
     if not mongo.db:
         return jsonify({"error": "Database connection failed"}), 500
 
-    #payload data
+    
+    print("✅ MongoDB Collections:", mongo.db.list_collection_names())
+
+   
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
     name = data.get("name")
 
-    #name validation
+    
     if not name:
         return jsonify({"error": "Name is required"}), 400
 
-    # Split the full name into first and last names
     name_parts = name.split()
     if len(name_parts) < 2:
         return jsonify({"error": "Full name must include first and last names"}), 400
 
     firstname = name_parts[0]
     lastname = ' '.join(name_parts[1:])
-    
 
+    
     if mongo.db.users.find_one({"email": email}):
         return jsonify({"error": "User already exists"}), 400
 
+   
     password_hash = generate_password_hash(password)
-    user = create_user(email,firstname,lastname, password_hash=password_hash)
+
+
+    user = {
+        "email": email,
+        "firstname": firstname,
+        "lastname": lastname,
+        "password_hash": password_hash
+    }
 
     try:
-        mongo.db.users.insert_one(user)
+        result = mongo.db.users.insert_one(user)
+        print("✅ User Inserted:", result.inserted_id)  
     except Exception as e:
+        import traceback
+        print(traceback.format_exc())  
         return jsonify({"error": f"Database error: {str(e)}"}), 500
+
     
-    # create a user object here so that i can grab the uid and use it to fetch the user's data
     user_object = {
-        "id": str(user['_id']),
-        "email": user['email'],
-        "name": "{} {}".format(firstname,lastname)
+        "id": str(result.inserted_id), 
+        "email": email,
+        "name": "{} {}".format(firstname, lastname)
     }
 
     return jsonify({
         "message": "User registered successfully",
         "user": user_object
-        }), 201
+    }), 201
 
 # Login with email and password
 @auth.route('/login', methods=['POST'])
